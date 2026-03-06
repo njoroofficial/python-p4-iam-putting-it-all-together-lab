@@ -7,6 +7,7 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Recipe
 
+# signup route
 class Signup(Resource):
     def post(self):
         data = request.get_json() or {}
@@ -65,6 +66,7 @@ class CheckSession(Resource):
 
         return user.to_dict(only=('id', 'username', 'image_url', 'bio')), 200
 
+# login route
 class Login(Resource):
     def post(self):
         data = request.get_json() or {}
@@ -79,6 +81,7 @@ class Login(Resource):
 
         return {'error': 'Unauthorized'}, 401
 
+#  logout route
 class Logout(Resource):
     def delete(self):
         if session.get('user_id'):
