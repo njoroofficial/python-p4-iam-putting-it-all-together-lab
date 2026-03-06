@@ -54,7 +54,16 @@ class Signup(Resource):
         return user.to_dict(only=('id', 'username', 'image_url', 'bio')), 201
 
 class CheckSession(Resource):
-    pass
+    def get(self):
+        user_id = session.get('user_id')
+        if not user_id:
+            return {'error': 'Unauthorized'}, 401
+
+        user = User.query.filter_by(id=user_id).first()
+        if not user:
+            return {'error': 'Unauthorized'}, 401
+
+        return user.to_dict(only=('id', 'username', 'image_url', 'bio')), 200
 
 class Login(Resource):
     pass
