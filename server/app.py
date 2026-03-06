@@ -80,7 +80,12 @@ class Login(Resource):
         return {'error': 'Unauthorized'}, 401
 
 class Logout(Resource):
-    pass
+    def delete(self):
+        if session.get('user_id'):
+            session.pop('user_id', None)
+            return '', 204
+
+        return {'error': 'Unauthorized'}, 401
 
 class RecipeIndex(Resource):
     pass
